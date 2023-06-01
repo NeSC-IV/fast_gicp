@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(fast_gicp)
 
-option(BUILD_VGICP_CUDA "Build GPU-powered VGICP" OFF)
+option(BUILD_VGICP_CUDA "Build GPU-powered VGICP" ON)
 option(BUILD_apps "Build application programs" ON)
 option(BUILD_test "Build test programs" OFF)
 option(BUILD_PYTHON_BINDINGS "Build python bindings" OFF)
@@ -15,7 +15,10 @@ endif()
 
 set(CMAKE_BUILD_TYPE "Release")
 
-find_package(PCL REQUIRED)
+# find_package(PCL REQUIRED)
+find_package(PCL REQUIRED COMPONENTS common io registration filters search visualization)
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 find_package(Eigen3 REQUIRED)
 
 if(DEFINED ENV{ROS_VERSION})
